@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">    
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Need to make a decision?</h1>
+        <p class="lead">Use Twitter sentiment analysis.</p>
+        <br/>
+        <br/>
+        <div class="form-container">
+          <form action="" method="post">
+            <input id="choice1" class="choice" type ="text" data-choice="1" placeholder="Choice #1..." name="choice1"/>
+            <input id="choice2" class="choice" type ="text" data-choice="2" placeholder="Choice #2..." name="choice2"/>
+            <input id="decision" class="btn btn-success btn-lg" value="Decide!"/>            
+          </form>
+        </div>
+        <br/>
+        <br/>
+        <div class="decision-container">
+          <p id="status"/>
+          <p id="decision-text"/>
+          <p id="score"/>
+          <input id="again" class="btn btn-success btn-lg" value="Again?"/>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="javascripts/main.js"></script>   
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<style>
+#chartdiv {
+	width	: 100%;
+	height	: 500px;
+}
+										
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- Chart code -->
+<script>
+var chartData = [];
+var chart = AmCharts.makeChart("chartdiv", {
+    "type": "serial",
+    "theme": "light",
+    "marginRight": 40,
+    "marginLeft": 40,
+    "autoMarginOffset": 20,
+    "mouseWheelZoomEnabled":false,
+    "dataDateFormat": "YYYY-MM-DD HH:MM:SS",
+    "valueAxes": [{
+        "id": "v1",
+        "axisAlpha": 0,
+        "position": "left",
+        "ignoreAxisWidth":true
+    }],
+	"legend":{
+	   	"position":"bottom",
+	    "marginRight":100,
+	    "autoMargins":false
+	  },
+    "graphs": [{
+        "id": "g1",
+        "valueField": "score1",
+        "lineThickness": 2,
+        "title":"#BCN"
+    },
+    {
+        "id": "g2",
+        "valueField": "score2",
+        "lineThickness": 2,
+        "title":"#TRX"
+    },
+    {
+        "id": "g3",
+        "valueField": "score3",
+        "lineThickness": 2,
+        "title":"#NANO"
+    }
+    ],
+    "valueScrollbar":{
+      "oppositeAxis":false,
+      "offset":50,
+      "scrollbarHeight":10
+    },
+    "categoryField": "date",
+    "categoryAxis": {
+        "parseDates": false,
+        "dashLength": 1,
+        "minorGridEnabled": true,
+        "minPeriod": "DD",
+        "labelsEnabled": false
+    },
+    "dataProvider": chartData
+});
+
+function updateChart(msg) {
+  	chartData.push(msg);
+  	// keep only 50 datapoints on screen for the demo
+  /*if (chartData.length > 50) {
+    chartData.splice(0, chartData.length - 50);
+  }*/
+  //writeToScreen("<span style='color: blue'>Received: " + wsEvent.data + "</span>");
+  chart.validateData(); //call to redraw the chart with new data
+
+}
+
+
+$(function () {
+	var socket = io();   
+    socket.on('update', function(msg){
+        updateChart(msg);
+    });
+});
+
+</script>
+<div id="chartdiv"></div>
